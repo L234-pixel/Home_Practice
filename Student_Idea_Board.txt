@@ -1,0 +1,16 @@
+Design a group idea board with the topic " Group Idea Board" Make this Center. and fill the box with blue color also insert the logo of university of Colombo School Of Computing.
+Insert a drop down menu default "Select Your name".
+Add these names
+1.Lumini
+2.Chamodhya
+3.Dinith
+4.Dilpa
+5.Udantha
+6.Yethmika
+7.Sanjee
+then insert another text box on the right "Enter your idea here.." then again on the Right side add the Add idea button, to add the idea when clicked. Then insert a horizontal line
+Then the added ideas should appear below the horizontal line within a box. 
+
+It is possible to filter the names with the ideas. and also it can be seen at once.
+
+Create using HTML.
