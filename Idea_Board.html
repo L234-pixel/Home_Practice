@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Group Idea Board</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #ffffff, #add8e6);
+            min-height: 100vh;
+        }
+        .header {
+            background-color: blue;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .logo {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 100px;
+            height: auto;
+        }
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            gap: 10px;
+        }
+        select, input[type="text"], button {
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            background-color: blue;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: darkblue;
+        }
+        hr {
+            margin: 20px 0;
+        }
+        .ideas-container {
+            padding: 20px;
+        }
+        .idea-box {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .filter {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Group Idea Board</h1>
+        <img src="https://avatars.githubusercontent.com/u/6937151?s=280&v=4" alt="University of Colombo School of Computing Logo" class="logo">
+    </div>
+    <div class="form-container">
+        <select id="nameSelect">
+            <option value="">Select Your Name</option>
+            <option value="Lumini">Lumini</option>
+            <option value="Chamodhya">Chamodhya</option>
+            <option value="Dinith">Dinith</option>
+            <option value="Dilpa">Dilpa</option>
+            <option value="Udantha">Udantha</option>
+            <option value="Yethmika">Yethmika</option>
+            <option value="Sanjee">Sanjee</option>
+        </select>
+        <input type="text" id="ideaInput" placeholder="Enter your idea here..">
+        <button id="addButton">Add Idea</button>
+    </div>
+    <hr>
+    <div class="ideas-container">
+        <div class="filter">
+            <label for="filterSelect">Filter by Name:</label>
+            <select id="filterSelect">
+                <option value="">All</option>
+                <option value="Lumini">Lumini</option>
+                <option value="Chamodhya">Chamodhya</option>
+                <option value="Dinith">Dinith</option>
+                <option value="Dilpa">Dilpa</option>
+                <option value="Udantha">Udantha</option>
+                <option value="Yethmika">Yethmika</option>
+                <option value="Sanjee">Sanjee</option>
+            </select>
+        </div>
+        <div id="ideasList"></div>
+    </div>
+
+    <script>
+        let ideas = JSON.parse(localStorage.getItem('ideas')) || [];
+
+        document.getElementById('addButton').addEventListener('click', function() {
+            const name = document.getElementById('nameSelect').value;
+            const idea = document.getElementById('ideaInput').value.trim();
+            if (name && idea) {
+                ideas.push({ name, idea });
+                localStorage.setItem('ideas', JSON.stringify(ideas));
+                document.getElementById('ideaInput').value = '';
+                document.getElementById('nameSelect').value = '';
+                displayIdeas();
+            } else {
+                alert('Please select a name and enter an idea.');
+            }
+        });
+
+        document.getElementById('filterSelect').addEventListener('change', displayIdeas);
+
+        function displayIdeas() {
+            const filter = document.getElementById('filterSelect').value;
+            const filteredIdeas = filter ? ideas.filter(i => i.name === filter) : ideas;
+            const ideasList = document.getElementById('ideasList');
+            ideasList.innerHTML = '';
+            filteredIdeas.forEach(idea => {
+                const ideaBox = document.createElement('div');
+                ideaBox.className = 'idea-box';
+                ideaBox.innerHTML = `<strong>${idea.name}:</strong> ${idea.idea}`;
+                ideasList.appendChild(ideaBox);
+            });
+        }
+
+        // Display ideas on page load
+        displayIdeas();
+    </script>
+</body>
+</html>
